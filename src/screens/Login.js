@@ -29,8 +29,8 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     loginUser(dispatch, { email, password })
-      .then((data) => {
-        navigate(from);
+      .then((user) => {
+        navigate('/otpVerification', { state: { uid: user.uid } });
       })
       .catch((error) => {
         alert(error);

@@ -26,7 +26,7 @@ export const loginUser = (dispatch, payload) => {
 export const registerUser = (dispatch, payload) => {
   return new Promise((resolve, reject) => {
     dispatch({ type: AUTH_REQUEST });
-    const { email, password, name } = payload;
+    const { name, email, password } = payload;
     createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
         dispatch({ type: AUTH_SUCCESS, payload: user });

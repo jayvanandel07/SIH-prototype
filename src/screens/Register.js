@@ -37,10 +37,16 @@ const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     registerUser(dispatch, { name, email, password })
-      .then((data) => {
-        fetch('/otpRegistration').then(res => res.json()).then(res => {
-          console.log(res);
-          navigate('/otpRegistration', { state: { res } });
+      .then((user) => {
+        fetch('/Otp-Registration').then(res => res.json()).then(async (res) => {
+          console.log(res.secretKey);
+          console.log(user.uid)
+          await addDoc(collection(db, 'users'), {
+            secretKey: res.secretKey,
+            uid: user.uid
+          })
+
+          navigate('/otpRegistration', { state: { data: res.data, secretKey: res.secretKey } });
         })
       })
       .catch((error) => {
@@ -68,20 +74,6 @@ const Register = () => {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              type="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-              value={password}
-            ></input>
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
               Email
             </label>
             <input
@@ -92,6 +84,20 @@ const Register = () => {
                 setEmail(e.target.value);
               }}
               value={email}
+            ></input>
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
+              Password
+            </label>
+            <input
+              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              placeholder="Password"
+              value={password}
             ></input>
           </div>
           <div className="flex items-center justify-between">
