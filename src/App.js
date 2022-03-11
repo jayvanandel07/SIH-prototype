@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import RequireAuth from "./components/Auth/RequireAuth";
+import { useAuthContext } from "./context/Auth/AuthContext";
+
+import Home from "./screens/Home";
+import Layout from "./screens/Layout";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
+import OtpRegistration from "./screens/OtpRegistration";
+import OtpVerification from "./screens/OtpVerification";
 
 function App() {
+  const user = useAuthContext();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Register />} />
+          <Route index path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route element={<RequireAuth />}>
+            <Route path="/otpRegistration" element={<OtpRegistration />} />
+            <Route path="/otpVerification" element={<OtpVerification />} />
+          </Route>
+
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
