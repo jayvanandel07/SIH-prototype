@@ -7,6 +7,7 @@ import { db } from "../config/firebase";
 const OtpVerification = () => {
   const [otp, setOtp] = new useState();
   const location = new useLocation();
+  const navigate = useNavigate();
   const docs = [];
   const { uid } = location.state;
 
@@ -33,6 +34,7 @@ const OtpVerification = () => {
       if (res.verified === true) {
         console.log("Verified");
         alert("Verified");
+        navigate("/");
       } else {
         alert("Incorrect otp");
       }

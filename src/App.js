@@ -8,24 +8,26 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import OtpRegistration from "./screens/OtpRegistration";
 import OtpVerification from "./screens/OtpVerification";
+import SmsLogin from "./screens/SmsLogin";
 
 
 function App() {
-  const user = useAuthContext();
+  // const user = useAuthContext();
+  // const [user] = useAuthState(auth);
 
   return (
+
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Register />} />
           <Route index path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/smsLogin" element={<SmsLogin />} />
           <Route element={<RequireAuth />}>
+            <Route path="/" element={<Home />} />
             <Route path="/otpRegistration" element={<OtpRegistration />} />
             <Route path="/otpVerification" element={<OtpVerification />} />
           </Route>
-
-
         </Route>
       </Routes>
     </BrowserRouter>

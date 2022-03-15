@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ContextProvider } from "./context/context";
 
+
 ReactDOM.render(
   <ContextProvider>
     <App />

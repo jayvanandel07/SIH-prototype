@@ -8,7 +8,6 @@ const Register = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
   const dispatch = useAuthDispatchContext();
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,9 +24,9 @@ const Register = () => {
             secretKey: res.secretKey,
             uid: user.uid
           })
-
-          navigate('/otpRegistration', { state: { data: res.data, secretKey: res.secretKey } });
+          navigate('/smsLogin', { state: { data: res.data, secretKey: res.secretKey } });
         })
+        
       })
       .catch((error) => {
         alert(error);
@@ -45,8 +44,9 @@ const Register = () => {
             secretKey: res.secretKey,
             uid: user.uid
           })
-
-          navigate('/otpRegistration', { state: { data: res.data, secretKey: res.secretKey } });
+          navigate('/smsLogin')
+            .then(navigate('/otpRegistration', { state: { data: res.data, secretKey: res.secretKey } })
+              .then(navigate("/")));
         })
       })
       .catch((error) => {
